@@ -1,12 +1,20 @@
-name: Auto-Approve Master Pr
+name: Auto Approve Master Pr
 on:
   pull_request:
-    types: [opened, synchronize, reopened]
+    types:
+      - opened                  # PR created
+      - synchronize             # New commits pushed to the PR
+      - reopened                # Closed PR is opened again
+      - ready_for_review        # Converted from Draft to Ready
+      - assigned                # User assigned
+      - unassigned              # User removed
+      - review_requested        # Reviewer added
+      - review_request_removed
     branches:
       - master
 
 jobs:
-  build:
+  approve_pr_and_comment:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
@@ -18,7 +26,7 @@ jobs:
         uses: actions/checkout@v4
 
       # 2. APPROVE with a custom comment
-      - name: Approve PR
+      - name: Approve PR And Comment
         if: success()
         run: |
           gh pr review "$PR_URL" --approve --body "✅ All checks passed successfully! Automated approval granted."
