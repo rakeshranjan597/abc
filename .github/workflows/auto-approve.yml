@@ -9,6 +9,7 @@ on:
       - assigned                # User assigned
       - unassigned              # User removed
       - review_requested        # Reviewer added
+      - edited                  # Title or body changed
       - review_request_removed
     branches:
       - master
@@ -16,6 +17,7 @@ on:
 jobs:
   approve_pr_and_comment:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.base.ref == 'master'
     permissions:
       pull-requests: write
       contents: write
@@ -25,7 +27,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2. APPROVE with a custom comment
       - name: Approve PR And Comment
         if: success()
         run: |
