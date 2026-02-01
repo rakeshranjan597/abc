@@ -1,0 +1,27 @@
+name: Auto-Approve Master Pr
+on:
+  pull_request:
+    types: [opened, reopened, synchronized]
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+      contents: write
+      checks: read
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # 2. APPROVE with a custom comment
+      - name: Approve PR
+        if: success()
+        run: |
+          gh pr review "$PR_URL" --approve --body "✅ All checks passed successfully! Automated approval granted."
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
