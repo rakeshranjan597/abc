@@ -1,6 +1,7 @@
 name: Auto-Approve Master Pr
 on:
   pull_request:
+    types: [opened, synchronize, reopened]
     branches:
       - master
 
