@@ -3,14 +3,14 @@ on:
   pull_request:
     types: [opened, reopened, synchronized]
     branches: [master]
-  workflow_dispatch:
 
 jobs:
-  build:
+  auto-approve:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
     steps:
-      - uses: actions/checkout@v4
       - name: Approve PR
-        run: echo Hello, world!
+        uses: actions/checkout@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
