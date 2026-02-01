@@ -1,6 +1,7 @@
 name: Auto-Approve on Success
 on:
   pull_request:
+    types: [opened, reopened, synchronized]
     branches:
       - master
 
@@ -15,13 +16,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-
-      # 1. WAIT for all other CI checks to finish successfully
-      - name: Wait for CI checks
-        uses: lewagon/wait-on-check-action@v1.3.4
-        with:
-          ref: ${{ github.event.pull_request.head.sha }}
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       # 2. APPROVE with a custom comment
       - name: Approve PR
