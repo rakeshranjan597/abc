@@ -1,0 +1,19 @@
+name: Auto-Approve Master PRs
+on:
+  pull_request:
+    types: [opened, reopened, synchronized]
+    branches:
+      - master
+
+jobs:
+  auto-approve:
+    runs-on: ubuntu-latest
+    # Optional: Only approve PRs from a specific team or exclude owners
+    # if: github.event.pull_request.user.login != 'RepoOwnerUsername'
+    permissions:
+      pull-requests: write
+    steps:
+      - name: Approve PR
+        uses: hmarr/auto-approve-action@v4
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
