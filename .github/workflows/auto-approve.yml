@@ -1,4 +1,4 @@
-name: Auto-Approve on Success
+name: Auto-Approve Master Pr
 on:
   pull_request:
     types: [opened, reopened, synchronized]
@@ -6,7 +6,7 @@ on:
       - master
 
 jobs:
-  approve-and-comment:
+  build:
     runs-on: ubuntu-latest
     permissions:
       pull-requests: write
