@@ -22,9 +22,6 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          wait-interval: 30 # Check every 30 seconds
-          # Optional: Specify exact jobs to wait for if needed
-          # running-workflow-name: 'approve-and-comment'
 
       # 2. APPROVE with a custom comment
       - name: Approve PR
